@@ -1,0 +1,134 @@
+#!/sbin/sh
+
+#
+# Control Method for sshguard (/lib/svc/method/init.sshguard)
+# Written by Yuri Voinov (C) 2007,2025
+#
+# ident "@(#)sshguard.sh    1.9    06/06/25 YV"
+#
+
+#############
+# Variables #
+#############
+
+# Base installation directory
+BASE_DIR="/usr/local"
+BASE_CONFIG_DIR=$BASE_DIR"/etc"
+
+# sshguard files paths
+SSHGUARD_PATH="$BASE_DIR""/bin"
+SSHGUARD_CONF_PATH="$BASE_CONFIG_DIR"
+
+# sshguard files
+SSHGUARD_BIN_FILE="sshguard"
+SSHGUARD_CONF_FILE="sshguard.conf"
+
+# Daemon settings
+SSHGUARD_CONF="$SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE"
+
+#
+# OS Commands location variables
+#
+CUT=`which cut`
+ECHO=`which echo`
+KILL=`which kill`
+PGREP=`which pgrep`
+UNAME=`which uname`
+
+# OS release
+OS_VER=`$UNAME -r|$CUT -f2 -d"."`
+OS_NAME=`$UNAME -s|$CUT -f1 -d" "`
+
+###############
+# Subroutines #
+###############
+
+check_sshguard ()
+{
+ # Check SSHGuard installed
+ program=$1
+ if [ ! -f "$$BASE_DIR/sbin/$program" -a ! -x "$BASE_DIR/sbin/$program" ]; then
+  $ECHO "ERROR: SSHGuard not found!"
+  $ECHO "Exiting..."
+  exit 1
+ fi
+}
+
+check_os ()
+{
+ # Check OS version
+ if [ ! "$OS_NAME" = "SunOS" -a ! "$OS_VER" -lt "10" ]; then
+  $ECHO "ERROR: Unsupported OS $OS_NAME $OS_VER"
+  $ECHO "Exiting..."
+  exit 1
+ fi
+}
+
+checkconf ()
+{
+# Check sshguard config file
+ config=$1
+ if [ -f "$SSHGUARD_CONF_PATH"/"$config" ]; then
+  $ECHO "1"
+ else
+  $ECHO "0"
+ fi
+}
+
+startproc()
+{
+# Start sshguard daemon
+ program=$1
+ if [ "`checkconf $SSHGUARD_CONF_FILE`" != "1" ]; then
+  $ECHO "ERROR: Config file $SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE not found."
+  $ECHO "Exiting..."
+  exit 2
+ else
+  $BASE_DIR/sbin/$program & >/dev/null 2>&1
+ fi
+}
+
+stopproc()
+{
+# Stop sshguard daemon
+ program=$1
+ if [ "`checkconf $SSHGUARD_CONF_FILE`" != "1" ]; then
+  $ECHO "ERROR: Config file $SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE not found."
+  $ECHO "Exiting..."
+  exit 2
+ else
+  $KILL -s TERM `$PGREP sshg`>/dev/null 2>&1
+ fi
+}
+
+##############
+# Main block #
+##############
+
+# Require to source root environment
+. /.profile
+
+# Check SSHGuard installed
+check_sshguard $SSHGUARD_BIN_FILE
+
+# Check OS version
+check_os
+
+case "$1" in
+"restart")
+  stopproc $SSHGUARD_BIN_FILE
+  startproc $SSHGUARD_BIN_FILE
+  ;;
+"start")
+  startproc $SSHGUARD_BIN_FILE
+  ;;
+"stop")
+  stopproc $SSHGUARD_BIN_FILE
+  ;;
+*)
+  $ECHO "Usage: $0 { start | stop | restart }"
+  exit 1
+esac
+
+exit 0
+###
