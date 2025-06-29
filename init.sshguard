@@ -68,7 +68,7 @@ checkconf ()
 {
 # Check sshguard config file
  config=$1
- if [ -f "$SSHGUARD_CONF_PATH"/"$config" ]; then
+ if [ -f "$config" ]; then
   $ECHO "1"
  else
   $ECHO "0"
@@ -79,8 +79,8 @@ startproc()
 {
 # Start sshguard daemon
  program=$1
- if [ "`checkconf $SSHGUARD_CONF_FILE`" != "1" ]; then
-  $ECHO "ERROR: Config file $SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE not found."
+ if [ "`checkconf $SSHGUARD_CONF`" != "1" ]; then
+  $ECHO "ERROR: Config file $SSHGUARD_CONF not found."
   $ECHO "Exiting..."
   exit 2
  else
@@ -92,8 +92,8 @@ stopproc()
 {
 # Stop sshguard daemon
  program=$1
- if [ "`checkconf $SSHGUARD_CONF_FILE`" != "1" ]; then
-  $ECHO "ERROR: Config file $SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE not found."
+ if [ "`checkconf $SSHGUARD_CONF`" != "1" ]; then
+  $ECHO "ERROR: Config file $SSHGUARD_CONF not found."
   $ECHO "Exiting..."
   exit 2
  else
@@ -131,4 +131,4 @@ case "$1" in
 esac
 
 exit 0
-###
+##
