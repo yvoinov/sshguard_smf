@@ -1,5 +1,5 @@
 ============================================================
-sshguard SMF Installation & Remove (C) 2007,2025 Yuri Voinov
+sshguard SMF Installation & Remove (C) 2007-2025 Yuri Voinov
 ============================================================
 
 ***  WARNING!  The  package  is configured by default to run
@@ -49,5 +49,5 @@ sshguard_smf_inst.sh    - SSHguard SMF Installation Script
 sshguard_smf_rmv.sh     - SSHGuard SMF Removal Script
 
 ============================================================
-sshguard SMF Installation & Remove (C) 2007,2025 Yuri Voinov
+sshguard SMF Installation & Remove (C) 2007-2025 Yuri Voinov
 ============================================================
