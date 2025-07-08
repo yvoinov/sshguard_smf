@@ -3,7 +3,7 @@
 <!--   Manifest-file for sshguard,put this file in
        /var/svc/manifest/network/sshguard.xml
        and run #svccfg import /var/svc/manifest/network/sshguard.xml
-       Fixed by Yuri Voinov (C) 2007,2025 -->
+       Fixed by Yuri Voinov (C) 2007-2025 -->
 <service_bundle type='manifest' name='sshguard'>
 
 <service
@@ -44,11 +44,25 @@
                 <service_fmri value='file://localhost/usr/local/etc/sshguard.conf' />
         </dependency>
 
+	<dependency name='SSH'
+		grouping='optional_all'
+		restart_on='refresh'
+		type='service'>
+                <service_fmri value='svc:/network/ssh:default' />
+	</dependency>
+
 	<dependency name='OpenSSH'
 		grouping='optional_all'
 		restart_on='refresh'
 		type='service'>
                 <service_fmri value='svc:/network/ossh:default' />
+	</dependency>
+
+	<dependency name='IPFilter'
+		grouping='optional_all'
+		restart_on='refresh'
+		type='service'>
+                <service_fmri value='svc:/network/ipfilter:default' />
 	</dependency>
 
         <dependent
