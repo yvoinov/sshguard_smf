@@ -2,9 +2,9 @@
 
 #
 # sshguard SMF remove.
-# Yuri Voinov (C) 2007,2025
+# Yuri Voinov (C) 2007-2025
 #
-# ident "@(#)sshguard_smf_rmv.sh    1.9    06/06/25 YV"
+# ident "@(#)sshguard_smf_rmv.sh    1.9    07/08/25 YV"
 #
 
 #############
