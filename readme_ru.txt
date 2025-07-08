@@ -1,5 +1,5 @@
 ============================================================
-sshguard SMF Installation & Remove (C) 2007,2025 Yuri Voinov
+sshguard SMF Installation & Remove (C) 2007-2025 Yuri Voinov
 ============================================================
 
 ***  ВНИМАНИЕ!   Пакет   по  умолчанию  настроен  на  запуск
@@ -50,5 +50,5 @@ sshguard_smf_inst.sh    - Установочный скрипт SSHGuard SMF
 sshguard_smf_rmv.sh     - Скрипт удаления SSHGuard SMF
 
 ============================================================
-sshguard SMF Installation & Remove (C) 2007,2025 Yuri Voinov
+sshguard SMF Installation & Remove (C) 2007-2025 Yuri Voinov
 ============================================================
