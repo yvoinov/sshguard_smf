@@ -97,7 +97,7 @@ stopproc()
   $ECHO "Exiting..."
   exit 2
  else
-  $KILL -s TERM `$PGREP sshg`>/dev/null 2>&1
+  $KILL -9 `$PGREP sshg`>/dev/null 2>&1
  fi
 }
 

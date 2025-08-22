@@ -81,7 +81,7 @@
         <exec_method
                 type='method'
                 name='stop'
-                exec=':kill'
+                exec='/lib/svc/method/init.sshguard %m'
                 timeout_seconds='20' />
 
         <exec_method
