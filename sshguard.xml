@@ -76,19 +76,19 @@
                 type='method'
                 name='start'
                 exec='/lib/svc/method/init.sshguard %m'
-                timeout_seconds='20'/>
+                timeout_seconds='60'/>
 
         <exec_method
                 type='method'
                 name='stop'
                 exec='/lib/svc/method/init.sshguard %m'
-                timeout_seconds='20' />
+                timeout_seconds='60' />
 
         <exec_method
                 type='method'
                 name='restart'
                 exec='/lib/svc/method/init.sshguard %m'
-                timeout_seconds='40' />
+                timeout_seconds='120' />
 
         <property_group name='startd'
                 type='framework'>
@@ -102,8 +102,6 @@
                 <propval name='action_authorization' type='astring'
                         value='solaris.smf.manage' />
         </property_group>
-
-        <stability value='Unstable' />
 
         <template>
                 <common_name>
