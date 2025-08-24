@@ -32,6 +32,7 @@ SSHGUARD_CONF="$SSHGUARD_CONF_PATH/$SSHGUARD_CONF_FILE"
 CUT=`which cut`
 ECHO=`which echo`
 PKILL=`which pkill`
+SLEEP=`which sleep`
 UNAME=`which uname`
 
 # OS release
@@ -83,7 +84,7 @@ startproc()
   $ECHO "Exiting..."
   exit 2
  else
-  $BASE_DIR/sbin/$program & >/dev/null 2>&1
+  $BASE_DIR/sbin/$program >/dev/null 2>&1 &
  fi
 }
 
@@ -91,13 +92,21 @@ stopproc()
 {
 # Stop sshguard daemon
  program=$1
- proc_tpl=`$ECHO $program | $CUT -c1-4`
  if [ "`checkconf $SSHGUARD_CONF`" != "1" ]; then
   $ECHO "ERROR: Config file $SSHGUARD_CONF not found."
   $ECHO "Exiting..."
   exit 2
  else
-  $PKILL -TERM $proc_tpl
+ for bin in $BASE_DIR/libexec/sshg-*; do
+  case "$bin" in
+   *sshg-*)
+     if [ -f "$bin" ]; then
+      $PKILL -9 -f "$bin"
+     fi
+   ;;
+  esac
+ done
+  $PKILL -9 -f $BASE_DIR/sbin/$program
  fi
 }
 
