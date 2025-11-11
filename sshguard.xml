@@ -19,8 +19,7 @@
                 grouping='require_all'
                 restart_on='none'
                 type='service'>
-                <service_fmri
-                        value='svc:/system/filesystem/local' />
+                <service_fmri value='svc:/system/filesystem/local' />
         </dependency>
 
         <dependency name='net-loopback'
@@ -44,25 +43,19 @@
                 <service_fmri value='file://localhost/usr/local/etc/sshguard.conf' />
         </dependency>
 
-	<dependency name='SSH'
-		grouping='optional_all'
-		restart_on='refresh'
-		type='service'>
-                <service_fmri value='svc:/network/ssh:default' />
-	</dependency>
-
-	<dependency name='OpenSSH'
-		grouping='optional_all'
-		restart_on='refresh'
-		type='service'>
-                <service_fmri value='svc:/network/ossh:default' />
-	</dependency>
-
-	<dependency name='IPFilter'
-		grouping='optional_all'
+	<dependency name='ipfilter'
+		grouping='require_all'
 		restart_on='refresh'
 		type='service'>
                 <service_fmri value='svc:/network/ipfilter:default' />
+	</dependency>
+
+	<dependency name='ssh-any'
+		grouping='require_any'
+		restart_on='refresh'
+		type='service'>
+                <service_fmri value='svc:/network/ssh:default' />
+                <service_fmri value='svc:/network/ossh:default' />
 	</dependency>
 
         <dependent
